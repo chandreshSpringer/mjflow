@@ -1,0 +1,13 @@
+entity Gscontent
+{
+    objectId String required,
+ 	repoContentPath String,
+    creationDate LocalDate required,
+    parentId String
+}
+
+
+dto Gscontent with mapstruct
+service Gscontent with serviceImpl
+
+

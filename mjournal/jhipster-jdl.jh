@@ -1,0 +1,38 @@
+entity JournalS {
+	objectId String,
+    objectName String required,
+    productId String required,
+    title String,
+	shortTitle String,
+    primaryLanguage Language,
+    companyGroup CompanyGroup,
+   	publisher  String,
+	publishingSegment String,
+	imprint String,
+	medium String,
+    creationDate LocalDate required
+}
+
+entity JournalR {
+	objectId String,
+	nameOfSociety String,
+	onlineServices String,
+	iPosition Integer
+}
+
+
+relationship OneToMany {
+  JournalS to JournalR{s2r}
+}
+
+enum Language{
+	ENGLISH, GERMAN, DUTCH
+}
+
+enum CompanyGroup{
+	AA, BB, CC
+}
+dto JournalS, JournalR with mapstruct
+service JournalS with serviceImpl
+service JournalR with serviceImpl
+

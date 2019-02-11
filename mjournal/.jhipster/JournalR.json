@@ -1,0 +1,39 @@
+{
+    "name": "JournalR",
+    "fields": [
+        {
+            "fieldName": "objectId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nameOfSociety",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "onlineServices",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "iPosition",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "s2r",
+            "otherEntityName": "journalS",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190211075119",
+    "entityTableName": "journal_r",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "microserviceName": "mjournal"
+}
