@@ -40,25 +40,11 @@ public class JournalDTO {
 
 	    private List<String> nameOfSociety;
 
-	    private String onlineServices;
+	    private List<String> onlineServices;
 
 	    private Long s2rId;
 
-	    public String getNameOfSociety() {
-	        return nameOfSociety;
-	    }
 
-	    public void setNameOfSociety(String nameOfSociety) {
-	        this.nameOfSociety = nameOfSociety;
-	    }
-
-	    public String getOnlineServices() {
-	        return onlineServices;
-	    }
-
-	    public void setOnlineServices(String onlineServices) {
-	        this.onlineServices = onlineServices;
-	    }
 
 	    public Long getS2rId() {
 	        return s2rId;
@@ -197,6 +183,30 @@ public class JournalDTO {
 	    public int hashCode() {
 	        return Objects.hashCode(getId());
 	    }
+
+		public List<String> getNameOfSociety() {
+			return nameOfSociety;
+		}
+
+		public void setNameOfSociety(List<String> nameOfSociety) {
+			this.nameOfSociety = nameOfSociety;
+		}
+
+		public List<String> getOnlineServices() {
+			return onlineServices;
+		}
+
+		public void setOnlineServices(List<String> onlineServices) {
+			this.onlineServices = onlineServices;
+		}
+		public void addOnlineServices(String onlineServices) {
+			getOnlineServices().add(onlineServices);
+		}
+	    
+	
+		public void addNameOfSociety(String nameOfSociety) {
+			getNameOfSociety().add(nameOfSociety);
+		}
 	    
 	
 

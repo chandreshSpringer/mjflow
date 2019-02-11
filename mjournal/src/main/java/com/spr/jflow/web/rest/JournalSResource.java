@@ -4,10 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.spr.jflow.service.JournalSService;
 import com.spr.jflow.web.rest.errors.BadRequestAlertException;
 import com.spr.jflow.web.rest.util.HeaderUtil;
+import com.spr.jflow.service.dto.JournalDTO;
 import com.spr.jflow.service.dto.JournalSDTO;
+import com.spr.jflow.service.mapper.JournalStoJournalMapper;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +32,11 @@ public class JournalSResource {
     private final Logger log = LoggerFactory.getLogger(JournalSResource.class);
 
     private static final String ENTITY_NAME = "journalS";
+    @Autowired
+    private  JournalSService journalSService;
+    @Autowired
+    private  JournalStoJournalMapper jJMapper;
 
-    private final JournalSService journalSService;
-
-    public JournalSResource(JournalSService journalSService) {
-        this.journalSService = journalSService;
-    }
 
     /**
      * POST  /journal-s : Create a new journalS.
@@ -44,21 +47,21 @@ public class JournalSResource {
      */
     @PostMapping("/journal-s")
     @Timed
-    public ResponseEntity<JournalSDTO> createJournalS(@Valid @RequestBody JournalSDTO journalSDTO) throws URISyntaxException {
+    public ResponseEntity<JournalDTO> createJournalS(@Valid @RequestBody JournalDTO journalSDTO) throws URISyntaxException {
         log.debug("REST request to save JournalS : {}", journalSDTO);
         if (journalSDTO.getId() != null) {
             throw new BadRequestAlertException("A new journalS cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        JournalSDTO result = journalSService.save(journalSDTO);
+        JournalSDTO result = journalSService.save(jJMapper.j2JSS(journalSDTO));
         return ResponseEntity.created(new URI("/api/journal-s/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(jJMapper.jsS2J(result));
     }
 
     /**
      * PUT  /journal-s : Updates an existing journalS.
      *
-     * @param journalSDTO the journalSDTO to update
+     * @param journalDTO the journalSDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated journalSDTO,
      * or with status 400 (Bad Request) if the journalSDTO is not valid,
      * or with status 500 (Internal Server Error) if the journalSDTO couldn't be updated
@@ -66,15 +69,17 @@ public class JournalSResource {
      */
     @PutMapping("/journal-s")
     @Timed
-    public ResponseEntity<JournalSDTO> updateJournalS(@Valid @RequestBody JournalSDTO journalSDTO) throws URISyntaxException {
-        log.debug("REST request to update JournalS : {}", journalSDTO);
-        if (journalSDTO.getId() == null) {
+    public ResponseEntity<JournalDTO> updateJournalS(@Valid @RequestBody JournalDTO journalDTO) throws URISyntaxException {
+        log.debug("REST request to update JournalS : {}", journalDTO);
+        if (journalDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        JournalSDTO result = journalSService.save(journalSDTO);
+        JournalSDTO result = journalSService.save(jJMapper.j2JSS(journalDTO));
+       
+        
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, journalSDTO.getId().toString()))
-            .body(result);
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, journalDTO.getId().toString()))
+            .body(jJMapper.jsS2J(result));
     }
 
     /**
